@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Sri Shakthi</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/ram-logo.png') }}">
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Light Theme with Soft Colors */
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            padding: 30px;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        h2 {
+            font-size: 2.2rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* Logout Button */
+        a {
+            text-decoration: none;
+            color: #d9534f;
+            font-weight: bold;
+            display: block;
+            text-align: right;
+            margin-bottom: 20px;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #c9302c;
+        }
+
+        /* Modern Table Design */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 14px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #2c3e50;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        td {
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover td {
+            background: #e9ecef;
+            transition: background 0.3s ease-in-out;
+        }
+
+        /* Expanding Message Column */
+        td:nth-child(4) {
+            white-space: normal;
+            word-wrap: break-word;
+            max-width: 500px;
+        }
+
+        /* Logout Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .message {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            text-align: center;
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <h2>Admin Panel - Inquiry Submissions</h2>
+    <a href="javascript:void(0)" onclick="showLogoutMessage()">Logout</a>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Message</th>
+                <th>Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for inquiry in inquiries %}
+            <tr>
+                <td>{{ inquiry.name }}</td>
+                <td>{{ inquiry.phone }}</td>
+                <td>{{ inquiry.email }}</td>
+                <td>{{ inquiry.message }}</td>
+                <td>{{ inquiry.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Logout Overlay -->
+    <div id="overlay" class="overlay">
+        <div class="message">Logging out...</div>
+    </div>
+
+    <script>
+        function showLogoutMessage() {
+            document.getElementById('overlay').style.display = 'flex';
+            setTimeout(function() {
+                document.getElementById('overlay').style.display = 'none';
+                window.location.href = "{{ url_for('admin_logout') }}";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
