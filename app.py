@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Inquiry, Admin
+import os
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
@@ -120,4 +121,8 @@ def termsandcondition():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True)
+    
+    # Get port from environment variable (Render requires this)
+    port = int(os.environ.get("PORT", 10000))  
+    app.run(host="0.0.0.0", port=port, debug=True)
+
