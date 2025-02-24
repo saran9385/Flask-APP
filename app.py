@@ -121,8 +121,7 @@ def termsandcondition():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    
-    # Get port from environment variable (Render requires this)
-    port = int(os.environ.get("PORT", 10000))  
-    app.run(host="0.0.0.0", port=port, debug=True)
 
+    # Render requires binding to PORT from environment variables
+    port = int(os.environ.get("PORT", 5000))  
+    app.run(host="0.0.0.0", port=port)
